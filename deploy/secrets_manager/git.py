@@ -63,7 +63,7 @@ def upsert_docker_password(
 def _upsert_github_secret(
     secret_name: str,
     secret_value: str,
-    repo_name: str = "owner/repo",  # FIXME!!! This needs to be automated by parsing the Repository URL.
+    repo_name: str = "andre-cavalheiro/house-hunt",
     token: str = config.git.ACCESS_TOKEN.get_secret_value(),
 ):
     """

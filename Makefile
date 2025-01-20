@@ -10,7 +10,7 @@ POETRY_VERSION = 1.8.3
 VENV_PATH ?= .venv
 POETRY_HOME ?= .venv_poetry
 
-PYTHON = $(shell command -v python3)
+PYTHON := $(shell if command -v pyenv >/dev/null 2>&1; then pyenv which python; else command -v python3; fi)
 POETRY = $(POETRY_HOME)/bin/poetry
 
 

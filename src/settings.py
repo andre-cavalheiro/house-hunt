@@ -24,6 +24,8 @@ class AppSettings(BaseSettings):
     SLUG: str = "house_hunt"
     ENVIRONMENT: str = "local"
     DEBUG: bool = False
+    EMAIL_USERNAME: str | None = None
+    EMAIL_PASSWORD: str | None = None
 
     @property
     def is_production(self) -> bool:
