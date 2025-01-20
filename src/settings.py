@@ -21,7 +21,7 @@ class AppSettings(BaseSettings):
         env_prefix = "APP_"
 
     NAME: str = "Bailout Bot"
-    SLUG: str = "{{cookiecutter.project_slug}}"
+    SLUG: str = "house_hunt"
     ENVIRONMENT: str = "local"
     DEBUG: bool = False
 

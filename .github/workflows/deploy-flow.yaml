@@ -1,4 +1,4 @@
-{% raw %}
+
 name: Deploy Flow to Prefect
 
 on:
@@ -55,4 +55,3 @@ jobs:
           make new-venv
           make install-minimal
           make deploy
-{% endraw %}
