@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "bailout_bot"
+version = "0.1.0"
+description = ""
+authors = ["André Cavalheiro <andre.cavalheiro13@gmail.com>"]
+license = "GNU v3.0"
+readme = "README.md"
+packages = [
+    { include = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+pydantic = "^2.9.2"
+pydantic-settings = "^2.6.0"
+prefect = "^3.0.11"
+prefect-github = "^0.3.0"
+aiohttp = "^3.10.10"
+tenacity = "^9.0.0"
+msgspec = "^0.18.6"
+pygithub = "^2.5.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.0.1"
+ruff = "^0.7.1"
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

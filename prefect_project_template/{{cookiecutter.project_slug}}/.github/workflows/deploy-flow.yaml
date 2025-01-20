@@ -1,0 +1,58 @@
+{% raw %}
+name: Deploy Flow to Prefect
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set APP_ENVIRONMENT
+        id: set-env
+        run: |
+          if [[ "${{ github.ref_name }}" == "main" || "${{ github.ref_name }}" == "master" ]]; then
+            echo "APP_ENVIRONMENT=prod" >> $GITHUB_ENV
+          elif [[ "${{ github.ref_name }}" == "develop" ]]; then
+            echo "APP_ENVIRONMENT=dev" >> $GITHUB_ENV
+          fi
+
+      - name: Prefect Deploy
+        env:
+          VENV_PATH: "${{ github.workspace }}/.venv"
+          POETRY_HOME: "${{ github.workspace }}/.cache/.poetry"
+          BIN_PATH: "${{ github.workspace }}/.cache/.bin"
+          PREFECT_API_URL: ${{ secrets.PREFECT_API_URL }}
+          PREFECT_API_KEY: ${{ secrets.PREFECT_API_KEY }}
+          PREFECT_WORK_POOL: ${{ secrets.PREFECT_WORK_POOL }}
+          GIT_REPOSITORY_LINK: ${{ secrets.GIT_REPOSITORY_LINK }}
+          GIT_ACCESS_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+          PREFECT_CRON_SCHEDULE: ${{ vars.PREFECT_CRON_SCHEDULE }}
+          APP_ENVIRONMENT: ${{ env.APP_ENVIRONMENT }}
+        run: |
+          make install-poetry
+          make clean
+          make new-venv
+          make install-minimal
+          make deploy
+{% endraw %}
